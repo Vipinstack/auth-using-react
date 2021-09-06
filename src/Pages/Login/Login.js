@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, withRouter } from "react-router-dom";
 
 import styles from "./Login.module.css";
 
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import config from "../../config";
 
 const Login = () => {
   const { register, handleSubmit, errors } = useForm();
   const [message, setMessage] = useState();
+  const [email, setEmail]=useState('');
+  const [password, setPassword]=useState('');
   const history = useHistory();
 
   const onSubmit = (data, e) => {
@@ -17,12 +18,14 @@ const Login = () => {
       data: "Login is in progress...",
       type: "alert-warning",
     });
-    fetch(`${config.baseUrl}/user/login`, {
+
+    let item={email,password}
+    fetch("http://d723-103-134-101-217.ngrok.io/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(item),
     })
       .then((res) => res.json())
       .then(({ error, data }) => {
@@ -36,7 +39,7 @@ const Login = () => {
             localStorage.setItem("token", data.token);
             history.push("/dashboard");
           }, 3000);
-
+  
         !error && e.target.reset();
       });
   };
@@ -133,4 +136,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withRouter(Login);

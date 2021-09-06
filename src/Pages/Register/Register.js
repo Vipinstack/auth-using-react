@@ -3,7 +3,7 @@ import styles from "./Register.module.css";
 
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import config from "../../config";
+// import config from "../../config";
 
 const Register = () => {
   const { register, handleSubmit, errors } = useForm();
@@ -14,7 +14,7 @@ const Register = () => {
       data: "Registration is in progress...",
       type: "alert-warning",
     });
-    fetch(`${config.baseUrl}/user/register`, {
+    fetch("http://4c6d-103-134-101-217.ngrok.io/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -60,6 +60,37 @@ const Register = () => {
             Registration Form
           </legend>
           <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
+          <div className="form-group">
+              <label htmlFor="inputForName">Your Name</label>
+              <span className="mandatory">*</span>
+              <input
+                id="inputForName"
+                name="name"
+                type="text"
+                className="form-control"
+                aria-describedby="Enter your name"
+                placeholder="Enter your name"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: "Please enter your name",
+                  },
+                  minLength: {
+                    value: 6,
+                    message: "Minimum 6 characters are allowed",
+                  },
+                  maxLength: {
+                    value: 255,
+                    message: "Maximum 255 characters are allowed",
+                  },
+                })}
+              />
+              {errors.name && (
+                <span className={`${styles.errorMessage} mandatory`}>
+                  {errors.name.message}
+                </span>
+              )}
+            </div>
             <div className="form-group">
               <label htmlFor="inputForEmail">Email address</label>
               <span className="mandatory">*</span>
@@ -99,37 +130,73 @@ const Register = () => {
                 </span>
               )}
             </div>
+
             <div className="form-group">
-              <label htmlFor="inputForName">Your Name</label>
+              <label htmlFor="inputForName">Phone_no</label>
               <span className="mandatory">*</span>
               <input
                 id="inputForName"
-                name="name"
-                type="text"
+                name="phone_no"
+                type="number"
                 className="form-control"
-                aria-describedby="Enter your name"
-                placeholder="Enter your name"
+                aria-describedby="Enter your phone_no"
+                placeholder="Enter your phone_no"
                 ref={register({
                   required: {
                     value: true,
-                    message: "Please enter your name",
+                    message: "Please enter your phone_no",
                   },
                   minLength: {
-                    value: 6,
-                    message: "Minimum 6 characters are allowed",
+                    value: 10,
+                    message: "Minimum 10 characters are allowed",
                   },
                   maxLength: {
-                    value: 255,
-                    message: "Maximum 255 characters are allowed",
+                    value: 10,
+                    message: "Maximum 12 characters are allowed",
                   },
                 })}
               />
-              {errors.name && (
+              {/* {errors.name && (
                 <span className={`${styles.errorMessage} mandatory`}>
-                  {errors.name.message}
+                  {errors.phone_no.message}
                 </span>
-              )}
+              )} */}
             </div>
+
+
+            
+            <div className="form-group">
+              <label htmlFor="inputForName">Level_id</label>
+              <span className="mandatory">*</span>
+              <input
+                id="inputForName"
+                name="Level_id"
+                type="number"
+                className="form-control"
+                aria-describedby="Enter your Level_id"
+                placeholder="Enter your Level_id"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: "Please enter your Level_id",
+                  },
+                  minLength: {
+                    value: 2,
+                    message: "Minimum 10 characters are allowed",
+                  },
+                  maxLength: {
+                    value: 2,
+                    message: "Maximum 12 characters are allowed",
+                  },
+                })}
+              />
+              {/* {errors.name && (
+                <span className={`${styles.errorMessage} mandatory`}>
+                  {errors.Level_id.message}
+                </span>
+              )} */}
+            </div>
+
             <div className="form-group">
               <label htmlFor="inputForPassword">Password</label>
               <span className="mandatory">*</span>
@@ -157,6 +224,37 @@ const Register = () => {
               {errors.password && (
                 <span className={`${styles.errorMessage} mandatory`}>
                   {errors.password.message}
+                </span>
+              )}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="inputForPassword">Password_confirmation</label>
+              <span className="mandatory">*</span>
+              <input
+                type="password_confirmation"
+                name="password_confirmation"
+                className="form-control"
+                id="inputForPassword"
+                placeholder="Enter password"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: "Please enter password",
+                  },
+                  minLength: {
+                    value: 6,
+                    message: "Minimum 6 characters are allowed",
+                  },
+                  maxLength: {
+                    value: 255,
+                    message: "Maximum 255 characters are allowed",
+                  },
+                })}
+              />
+              {errors.password && (
+                <span className={`${styles.errorMessage} mandatory`}>
+                  {errors.password_confirmation.message}
                 </span>
               )}
             </div>
